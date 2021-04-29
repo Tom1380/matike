@@ -48,25 +48,30 @@ class MobjectPlacement(Scene):
         self.wait(1)
 
 
+def get_internal_circumferences():
+    return [Circle(radius=(1 - i / 20), color=BLUE).set_stroke(width=1) for i in range(1, 20)]
+
+
 class Matike(Scene):
     def construct(self):
-        circle = Circle()
-        circle.set_fill(RED, opacity=0.5)   # set color and transparency
+        main_circle = Circle(radius=1, color=PURPLE)
+        self.play(Create(main_circle))
 
-        square = Square()
-        square.set_fill(PURPLE, opacity=0.5)   # set color and transparency
+        # Internal circumferences
+        int_circumferences = get_internal_circumferences()
 
-        triangle = Triangle()
-        triangle.set_fill(GREEN, opacity=0.5)   # set color and transparency
+        creations = [Create(circumference)
+                     for circumference in int_circumferences]
+        self.play(*creations)
 
-        # place the circle two units left from the origin
-        circle.move_to(LEFT * 2)
-        # place the square to the left of the circle
-        square.next_to(circle, LEFT)
-        # align the left border of the triangle to the left border of the circle
-        triangle.next_to(circle, RIGHT)
+        all_circumferences = [main_circle, *int_circumferences]
 
-        self.play(Create(square))      # animate the creation of the square
-        self.play(Transform(square, circle))
-        self.play(Transform(square, triangle))
+        # all_circumferences = [self.move_c_left(c) for c in all_circumferences]
+
+        end_point = (-3, 0, 0)
+        move_to_left = [ApplyMethod(c.shift, end_point)
+                        for c in all_circumferences]
+
+        self.play(*move_to_left)
+
         self.wait(1)

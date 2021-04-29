@@ -18,4 +18,4 @@ COPY scene.py .
 
 WORKDIR /output
 
-CMD [ "manim", "/input/scene.py", "Matike", "-qh" ]
+CMD [ "manim", "/input/scene.py", "Matike", "-ql" ]
