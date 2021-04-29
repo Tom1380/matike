@@ -1,0 +1,14 @@
+version: "3"
+services:
+  matike:
+    container_name: matike
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - "./output:/output"
+    # restart: unless-stopped
+
+volumes:
+  output:
+    external: true
