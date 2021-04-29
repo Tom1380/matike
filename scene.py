@@ -57,6 +57,12 @@ class Matike(Scene):
         main_circle = Circle(radius=1, color=PURPLE)
         self.play(Create(main_circle))
 
+        radius = Line(main_circle.get_center(), (1, 0, 0)).set_color(WHITE)
+        r_label = Text('r', size=0.5).next_to(radius, UP)
+
+        self.play(Create(radius))
+        self.add(r_label)
+
         # Internal circumferences
         int_circumferences = get_internal_circumferences()
 
@@ -70,7 +76,7 @@ class Matike(Scene):
 
         end_point = (-3, 0, 0)
         move_to_left = [ApplyMethod(c.shift, end_point)
-                        for c in all_circumferences]
+                        for c in [radius, r_label, *all_circumferences]]
 
         self.play(*move_to_left)
 
