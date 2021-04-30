@@ -89,7 +89,8 @@ class Matike(Scene):
         self.wait(1)
 
         # self.play(ApplyMethod(radius.shift, (6, -1, 0)))
-        self.play(Rotate(radius, angle=PI / 2, about_point=(-2, 0, 0)))
+        self.play(ApplyMethod(radius.shift, (2, -0.5, 0)))
+        self.play(Rotate(radius, angle=PI / 2))
 
         for i, circumference in enumerate(reversed(int_circumferences)):
             self.play(Transform(circumference, Line(
