@@ -88,10 +88,11 @@ class Matike(Scene):
 
         self.wait(1)
 
-        self.play(ApplyMethod(radius.shift, (6, -1, 0)))
+        # self.play(ApplyMethod(radius.shift, (6, -1, 0)))
+        self.play(Rotate(radius, angle=PI / 2, about_point=(-2, 0, 0)))
 
         for i, circumference in enumerate(reversed(int_circumferences)):
             self.play(Transform(circumference, Line(
-                (3 + i / 20, -3, 0), ((3 + i / 20, circumference.radius * TAU - 3, 0))).set_color(BLUE)), run_time=0.5)
+                (3 + i / 20, -3, 0), ((3 + i / 20, circumference.radius * TAU - 3, 0)), stroke_width=1).set_color(BLUE)), run_time=0.5)
 
         self.wait(10)
