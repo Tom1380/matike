@@ -49,7 +49,7 @@ class MobjectPlacement(Scene):
 
 
 def get_internal_circumferences():
-    return [Circle(radius=(1 - i / 20), color=BLUE).set_stroke(width=1) for i in range(1, 20)]
+    return [Circle(radius=(1 - i / 20), color=BLUE).set_stroke(width=1) for i in range(1, 21)]
 
 
 class Matike(Scene):
@@ -80,10 +80,18 @@ class Matike(Scene):
 
         # all_circumferences = [self.move_c_left(c) for c in all_circumferences]
 
-        end_point = (-3, 0, 0)
+        end_point = (-3, -2, 0)
         move_to_left = [ApplyMethod(c.shift, end_point)
                         for c in [radius, *all_circumferences]]
 
         self.play(*move_to_left)
 
         self.wait(1)
+
+        self.play(ApplyMethod(radius.shift, (6, -1, 0)))
+
+        for i, circumference in enumerate(reversed(int_circumferences)):
+            self.play(Transform(circumference, Line(
+                (3 + i / 20, -3, 0), ((3 + i / 20, circumference.radius * TAU - 3, 0))).set_color(BLUE)), run_time=0.5)
+
+        self.wait(10)
