@@ -78,8 +78,6 @@ class Matike(Scene):
 
         all_circumferences = [main_circle, *int_circumferences]
 
-        # all_circumferences = [self.move_c_left(c) for c in all_circumferences]
-
         end_point = (-3, -2, 0)
         move_to_left = [ApplyMethod(c.shift, end_point)
                         for c in [radius, *all_circumferences]]
@@ -92,8 +90,8 @@ class Matike(Scene):
         self.play(ApplyMethod(radius.shift, (2, -0.5, 0)))
         self.play(Rotate(radius, angle=PI / 2))
 
-        for i, circumference in enumerate(reversed(int_circumferences)):
+        for i, circumference in enumerate(int_circumferences):
             self.play(Transform(circumference, Line(
-                (3 + i / 20, -3, 0), ((3 + i / 20, circumference.radius * TAU - 3, 0)), stroke_width=1).set_color(BLUE)), run_time=0.5)
+                (-0.5, -3 + i / 20, 0), ((-0.5 + circumference.radius * TAU, -3 + i / 20, 0)), stroke_width=1).set_color(BLUE)), run_time=0.5)
 
         self.wait(10)
