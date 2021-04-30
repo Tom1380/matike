@@ -91,6 +91,7 @@ class Matike(Scene):
         self.play(Rotate(radius, angle=PI / 2))
 
         for i, circumference in enumerate(int_circumferences):
+            i = i + 1
             self.play(Transform(circumference, Line(
                 (-0.5, -3 + i / 20, 0), ((-0.5 + circumference.radius * TAU, -3 + i / 20, 0)), stroke_width=1).set_color(BLUE)), run_time=0.5)
 
