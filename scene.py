@@ -55,20 +55,26 @@ def get_internal_circumferences():
 class Matike(Scene):
     def construct(self):
         main_circle = Circle(radius=1, color=PURPLE)
-        self.play(Create(main_circle))
 
         radius = Line(main_circle.get_center(), (1, 0, 0)).set_color(WHITE)
-        r_label = Text('r', size=0.5).next_to(radius, UP)
+
+        rotate_radius = Rotate(
+            radius, angle=TAU, about_point=main_circle.get_center())
+
+        brace = BraceLabel(radius, text='r')
 
         self.play(Create(radius))
-        self.add(r_label)
+        self.play(rotate_radius, Create(main_circle))
+        self.play(Create(brace))
+        self.wait(1)
+        self.play(FadeOut(brace))
 
         # Internal circumferences
         int_circumferences = get_internal_circumferences()
 
         creations = [Create(circumference)
                      for circumference in int_circumferences]
-        self.play(*creations)
+        self.play(rotate_radius, *creations)
 
         all_circumferences = [main_circle, *int_circumferences]
 
@@ -76,7 +82,7 @@ class Matike(Scene):
 
         end_point = (-3, 0, 0)
         move_to_left = [ApplyMethod(c.shift, end_point)
-                        for c in [radius, r_label, *all_circumferences]]
+                        for c in [radius, *all_circumferences]]
 
         self.play(*move_to_left)
 
