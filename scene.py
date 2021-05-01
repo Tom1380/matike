@@ -66,7 +66,7 @@ class Matike(Scene):
 
         self.play(Create(radius))
         self.play(rotate_radius, Create(self.main_circle))
-        self.play(Create(brace))
+        self.play(Create(brace), run_time=0.5)
         self.wait(1)
         self.play(FadeOut(brace))
 
@@ -102,7 +102,7 @@ class Matike(Scene):
             self.unrolled_main_circle, text='2{\pi}r')
 
         self.play(Create(cloned_radius_brace),
-                  Create(unrolled_main_circle_brace))
+                  Create(unrolled_main_circle_brace), run_time=0.5)
 
         self.wait(10)
 
