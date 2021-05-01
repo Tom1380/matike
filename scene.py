@@ -90,7 +90,7 @@ class Matike(Scene):
         cloned_radius = Line(self.main_circle.get_center(),
                              (-2, 0, 0)).set_color(WHITE)
 
-        self.play(ApplyMethod(cloned_radius.shift, (2, -0.5, 0)))
+        self.play(ApplyMethod(cloned_radius.shift, (2.5, 0, 0)))
         self.play(Rotate(cloned_radius, angle=PI / 2))
 
         self.unroll_circumferences()
@@ -112,10 +112,10 @@ class Matike(Scene):
         for i, circumference in l:
             i = i + 1
             self.play(TransformFromCopy(circumference, Line(
-                (-0.5, -1 + i / 20, 0), ((-0.5 + circumference.radius * TAU, -1 + i / 20, 0)), stroke_width=3).set_color(TEAL)), run_time=0.5)
+                (0, -0.5 + i / 20, 0), ((0 + circumference.radius * TAU, -0.5 + i / 20, 0)), stroke_width=3).set_color(TEAL)), run_time=0.5)
 
         self.unrolled_main_circle = Line(
-            (-0.5, -1, 0), ((-0.5 + self.main_circle.radius * TAU, -1, 0))).set_color(PURPLE)
+            (0, -0.5, 0), ((0 + self.main_circle.radius * TAU, -0.5, 0))).set_color(PURPLE)
 
         self.play(TransformFromCopy(self.main_circle,
                                     self.unrolled_main_circle, run_time=0.5))
