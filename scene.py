@@ -91,7 +91,7 @@ class Matike(Scene):
                              (-2, 0, 0)).set_color(WHITE)
 
         self.play(ApplyMethod(cloned_radius.shift, (2, -0.5, 0)))
-        self.play(ApplyMethod(cloned_radius.rotate, PI / 2))
+        self.play(Rotate(cloned_radius, angle=PI / 2))
 
         self.unroll_circumferences()
 
