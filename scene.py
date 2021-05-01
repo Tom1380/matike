@@ -54,29 +54,30 @@ def get_internal_circumferences():
 
 class Matike(Scene):
     def construct(self):
-        main_circle = Circle(radius=1, color=PURPLE)
+        self.main_circle = Circle(radius=1, color=PURPLE)
 
-        radius = Line(main_circle.get_center(), (1, 0, 0)).set_color(WHITE)
+        radius = Line(self.main_circle.get_center(),
+                      (1, 0, 0)).set_color(WHITE)
 
         rotate_radius = Rotate(
-            radius, angle=TAU, about_point=main_circle.get_center())
+            radius, angle=TAU, about_point=self.main_circle.get_center())
 
         brace = BraceLabel(radius, text='r')
 
         self.play(Create(radius))
-        self.play(rotate_radius, Create(main_circle))
+        self.play(rotate_radius, Create(self.main_circle))
         self.play(Create(brace))
         self.wait(1)
         self.play(FadeOut(brace))
 
         # Internal circumferences
-        int_circumferences = get_internal_circumferences()
+        self.int_circumferences = get_internal_circumferences()
 
         creations = [Create(circumference)
-                     for circumference in int_circumferences]
+                     for circumference in self.int_circumferences]
         self.play(rotate_radius, *creations)
 
-        all_circumferences = [main_circle, *int_circumferences]
+        all_circumferences = [self.main_circle, *self.int_circumferences]
 
         end_point = (-3, -2, 0)
         move_to_left = [ApplyMethod(c.shift, end_point)
@@ -90,9 +91,17 @@ class Matike(Scene):
         self.play(ApplyMethod(radius.shift, (2, -0.5, 0)))
         self.play(Rotate(radius, angle=PI / 2))
 
-        for i, circumference in enumerate(int_circumferences):
+        self.unroll_circumferences()
+
+        self.wait(10)
+
+    def unroll_circumferences(self):
+        l = list(enumerate(self.int_circumferences))
+        l = reversed(l)
+        for i, circumference in l:
             i = i + 1
             self.play(Transform(circumference, Line(
                 (-0.5, -3 + i / 20, 0), ((-0.5 + circumference.radius * TAU, -3 + i / 20, 0)), stroke_width=1).set_color(BLUE)), run_time=0.5)
 
-        self.wait(10)
+        self.play(Transform(self.main_circle, Line(
+            (-0.5, -3, 0), ((-0.5 + self.main_circle.radius * TAU, -3, 0))).set_color(PURPLE)), run_time=0.5)
