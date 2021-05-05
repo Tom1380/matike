@@ -90,8 +90,7 @@ class Matike(Scene):
         cloned_radius = Line(self.main_circle.get_center(),
                              (-2, 0, 0)).set_color(WHITE)
 
-        self.play(ApplyMethod(cloned_radius.shift, (2.5, 0, 0)))
-        self.play(Rotate(cloned_radius, angle=PI / 2))
+        self.play(cloned_radius.animate.shift((2.5, 0, 0)).rotate(PI / 2))
 
         self.unroll_circumferences()
 
