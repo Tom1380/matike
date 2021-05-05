@@ -111,7 +111,7 @@ class Matike(Scene):
         l = reversed(l)
         for i, circumference in l:
             i = i + 1
-            self.play(TransformFromCopy(circumference, Line(
+            self.play(Transform(circumference, Line(
                 (0, -0.5 + i / 20, 0), ((0 + circumference.radius * TAU, -0.5 + i / 20, 0)), stroke_width=3).set_color(TEAL)), run_time=0.5)
 
         self.unrolled_main_circle = Line(
