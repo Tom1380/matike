@@ -110,17 +110,32 @@ class Matike(Scene):
 
         overlayed_circle.shift(LEFT * 3)
 
-        self.play(Create(overlayed_circle), Uncreate(radius))
+        fade_unrolled_circumferences_out = [
+            FadeOut(uc) for uc in self.unrolled_circumferences]
+
+        filled_triangle_points = [[0, 0.5, 0],
+                                  [0, -0.5, 0], [TAU, -0.5, 0]]
+
+        filled_triangle_color = TEAL
+
+        filled_triangle = Polygon(
+            *filled_triangle_points, color=filled_triangle_color).set_fill(filled_triangle_color, opacity=0.5)
+
+        self.play(Create(overlayed_circle), Create(filled_triangle), Uncreate(radius), *fade_unrolled_circumferences_out,
+                  FadeOut(self.unrolled_main_circle), FadeOut(cloned_radius))
 
         self.wait(10)
 
     def unroll_circumferences(self):
         l = list(enumerate(self.int_circumferences))
         l = reversed(l)
+        self.unrolled_circumferences = []
         for i, circumference in l:
             i = i + 1
-            self.play(Transform(circumference, Line(
-                (0, -0.5 + i / 20, 0), ((0 + circumference.radius * TAU, -0.5 + i / 20, 0)), stroke_width=3).set_color(TEAL)), run_time=0.5)
+            unrolled = Line(
+                (0, -0.5 + i / 20, 0), ((0 + circumference.radius * TAU, -0.5 + i / 20, 0)), stroke_width=3).set_color(TEAL)
+            self.play(Transform(circumference, unrolled), run_time=0.5)
+            self.unrolled_circumferences.append(circumference)
 
         self.unrolled_main_circle = Line(
             (0, -0.5, 0), ((0 + self.main_circle.radius * TAU, -0.5, 0))).set_color(PURPLE)
