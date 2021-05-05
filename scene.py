@@ -124,6 +124,27 @@ class Matike(Scene):
         self.play(Create(overlayed_circle), Create(filled_triangle), Uncreate(radius), *fade_unrolled_circumferences_out,
                   FadeOut(self.unrolled_main_circle), FadeOut(cloned_radius))
 
+        self.wait(1)
+
+        self.play(overlayed_circle.animate.shift(UP * 2), self.main_circle.animate.shift(UP * 2), filled_triangle.animate.shift(
+            UP * 2), cloned_radius_brace.animate.shift(UP * 2), unrolled_main_circle_brace.animate.shift(UP * 2))
+
+        formula = MathTex(
+            r"r", r"\cdot", r"2{\pi}r", r"\over", r"2")
+        formula.shift(DOWN)
+        self.play(Create(formula))
+        self.wait(3)
+
+        formula2 = MathTex(
+            r"r", r"\cdot", r"{\pi}r")
+        formula2.shift(DOWN)
+        self.play(Transform(formula, formula2))
+        self.wait(3)
+
+        formula3 = MathTex("{\pi}r^2")
+        formula3.shift(DOWN)
+        self.play(Transform(formula, formula3))
+
         self.wait(10)
 
     def unroll_circumferences(self):
