@@ -103,6 +103,15 @@ class Matike(Scene):
         self.play(Create(cloned_radius_brace),
                   Create(unrolled_main_circle_brace), run_time=0.5)
 
+        self.wait(3)
+
+        overlayed_circle = Circle(
+            radius=1, color=PURPLE).set_fill(PURPLE, opacity=0.5)
+
+        overlayed_circle.shift(LEFT * 3)
+
+        self.play(Create(overlayed_circle), Uncreate(radius))
+
         self.wait(10)
 
     def unroll_circumferences(self):
